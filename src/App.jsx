@@ -6,9 +6,10 @@ import FirstYear from './components/Pages/FirstYear.jsx'
 import SecondYear from './components/Pages/SecondYear.jsx'
 import ThirdYear from './components/Pages/ThirdYear.jsx'
 import Loading from './components/Loading/Loading.jsx'
-const QA = React.lazy(() => import('./components/QA/QA.jsx'))
+import QA from './components/QA/QA.jsx'
 
 export default function App() {
+  const [arr, setArr] = useState(null)
   const [sem, setSem] = useState(null)
   const [name, setName] = useState(null)
   const [year, setYear] = useState(null)
@@ -19,20 +20,23 @@ export default function App() {
     setYear(y)
   }
 
+  if (sem && name && year) {
+    const data = import(`./components/PastPapers/${sem}/${name}/${name}-${year}.jsx`)
+    data.then((mod) => setArr(mod.default))
+  }
+
   return (
     <BrowserRouter>
-    <React.Suspense fallback={<Loading />}>
     <Routes>
       <Route  path='/' element={<Layout />}>
         <Route index element={<Home />}/>
         <Route path='1st-year' element={<FirstYear update={update} />}/>
         <Route path='2nd-year' element={<SecondYear update={update} />}/>
         <Route path='3rd-year' element={<ThirdYear update={update} />}/>
-        <Route path={`${sem}/${name}/${year}`} element={<QA sem={sem} name={name} year={year} />}/>
+        <Route path={`${sem}/${name}/${year}`} element={arr && arr[0].info === `${sem}/${name}/${year}` ? <QA data={arr}/> : <Loading/>}/>
         <Route path='*' element={<Home />}/>
       </Route>
     </Routes>
-    </React.Suspense>
     </BrowserRouter>
   )
 }

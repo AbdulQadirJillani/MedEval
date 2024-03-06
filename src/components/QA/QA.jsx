@@ -3,8 +3,7 @@ import styles from './QA.module.css'
 import { Link } from 'react-router-dom'
 
 export default function QA(props) {
-    const data = require(`../PastPapers/${props.sem}/${props.name}/${props.name}-${props.year}`).default
-    const qaArray = data.map((obj, index) => ({id: index, question: obj.text, options: obj.responses}))
+    const qaArray = props.data
     const [index, setIndex] = useState(0)
     const [optionIndex, setOptionIndex] = useState(null)
     const [ansIndex, setAnsIndex] = useState(null)
@@ -39,8 +38,8 @@ export default function QA(props) {
     }
 
     function show() {
-        for (let i=0; i<currentQA.options.length; i++) {
-            if (currentQA.options[i].correct) {
+        for (let i=0; i<currentQA.answers.length; i++) {
+            if (currentQA.answers[i].bool) {
                 setAnsIndex(i)
             }
         }
@@ -52,7 +51,7 @@ export default function QA(props) {
 
         <header className={styles.qainfo}>
             <p>
-                {props.name}-{props.year}
+                {currentQA.info}
             </p>
 
             <p>
@@ -70,14 +69,14 @@ export default function QA(props) {
 
             <ol>
                 {
-                currentQA.options.map((opt, index) => 
+                currentQA.answers.map((opt, index) => 
                 <li
                 key={index} 
                 className={(index===optionIndex || index===ansIndex) ? 
-                    ((opt.correct) ? styles.optionCorrect : styles.optionWrong) 
+                    ((opt.bool) ? styles.optionCorrect : styles.optionWrong) 
                     : styles.option}
-                onClick={() => checker(index, opt.correct)}>
-                    {opt.text}
+                onClick={() => checker(index, opt.bool)}>
+                    {opt.option}
                 </li>)
                 }
             </ol>
