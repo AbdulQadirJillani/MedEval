@@ -102,6 +102,19 @@
     background-image: url('./images-transparent/infectious-transparent.png');
 }
 
+.drg {
+    background-image: url('./images-transparent/drg-transparent.png');
+    background-size: cover;
+}
+
+.ent {
+    background-image: url('./images-transparent/ent-transparent.png');
+}
+
+.eye {
+    background-image: url('./images-transparent/eye-transparent.png');
+}
+
 .moduleheading {
     color: var(--text);
     font-weight: 600;

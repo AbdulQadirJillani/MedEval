@@ -5,6 +5,7 @@ import Home from './components/Home/Home.jsx'
 import FirstYear from './components/Pages/FirstYear.jsx'
 import SecondYear from './components/Pages/SecondYear.jsx'
 import ThirdYear from './components/Pages/ThirdYear.jsx'
+import FourthYear from './components/Pages/FourthYear.jsx'
 import Loading from './components/Loading/Loading.jsx'
 import QA from './components/QA/QA.jsx'
 
@@ -38,6 +39,7 @@ export default function App() {
         <Route path='1st-year' element={<FirstYear update={update} />}/>
         <Route path='2nd-year' element={<SecondYear update={update} />}/>
         <Route path='3rd-year' element={<ThirdYear update={update} />}/>
+        <Route path='4th-year' element={<FourthYear update={update} />}/>
         <Route path={`${sem}/${name}/${year}`} element={arr && arr[0].info === `${sem}/${name}/${year}` ? <QA data={arr}/> : <Loading/>}/>
         <Route path={`${sem}/${name}/compiled`} element={arr && arr[0].info[0] === `${sem}/${name}/compiled` ? <QA data={arr}/> : <Loading/>}/>
         <Route path='*' element={<Home />}/>
